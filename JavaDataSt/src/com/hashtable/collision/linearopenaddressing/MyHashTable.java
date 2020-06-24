@@ -16,7 +16,7 @@ public class MyHashTable<K,V> implements HashFunction<K, V>{
 	
 	@Override
 	public boolean put(K k, V v) {
-		if(c==size) return false;//
+		if(c==size) return false;// table is full
 		pair=new Pair<K,V>(k, v);
 		int index=hashProvider.hashVaue(k, c);
 		if(table[index]==null)
