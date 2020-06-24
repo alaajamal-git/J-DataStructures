@@ -4,40 +4,44 @@ public class MyHashTable<K,V> implements HashFunction<K, V>{
     private final HashProvider<K> hashProvider;
 	Pair<K, V> pair;
 	Pair<K,V>[] table;
-	int size;
-	
-	public MyHashTable(int size,HashProvider<K> hashProvider) {
-		this.size=size;
+	int c;
+	int size=0;
+	public MyHashTable(int capacity,HashProvider<K> hashProvider) {
+		this.c=capacity;
 		this.hashProvider=hashProvider;
-		table=new Pair[size];
+		table=new Pair[c];
 		
 	}
 	
 	
 	@Override
-	public void put(K k, V v) {
+	public boolean put(K k, V v) {
+		if(c==size) return false;//
 		pair=new Pair<K,V>(k, v);
-		int index=hashProvider.hashVaue(k, size);
+		int index=hashProvider.hashVaue(k, c);
 		if(table[index]==null)
 				table[index]=pair;
-		else {
-			while(table[(++index)%size]!=null);
-				table[index%size]=pair;
-		}
-		//System.out.println(index);
-
+		else 
+			while(table[(index++)%c]!=null); //find next free position
+				table[index%c]=pair;
+		
+		size++;
+				return true;
+						
 
 	}
 
 	@Override
 	public V get(K k) {
-		int index=hashProvider.hashVaue(k, size);
-		
-
+		int index=hashProvider.hashVaue(k, c);
+		int stopIdx=index;
 		Pair<K,V>pair =(Pair<K, V>) table[index];
-		while(pair!=null&&!pair.keyEquals(k))
-			pair =(Pair<K, V>) table[(++index)%size];
-		
+		if(pair!=null&&pair.keyEquals(k))return pair.getV();
+		index++;
+		for(;!pair.keyEquals(k)&&pair!=null;index++) {   //null position means not found!
+			if((index%=c)==stopIdx) return null;      //all elements are reached
+			pair =(Pair<K, V>) table[index];
+		}
 		return (pair==null)?null:pair.getV();
 			
 		}
