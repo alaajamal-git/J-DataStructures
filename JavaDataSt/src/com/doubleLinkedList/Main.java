@@ -1,7 +1,7 @@
 package com.doubleLinkedList;
 
 
-public class Executer {
+public class Main {
 
 	public static void main(String[] args) {
 

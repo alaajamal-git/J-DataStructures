@@ -1,7 +1,7 @@
 package com.hashtable.collision.chaining;
 
 
-public class Executer {
+public class Main {
 
 	public static void main(String[] args) {
 
