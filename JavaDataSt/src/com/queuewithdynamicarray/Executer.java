@@ -1,4 +1,4 @@
-package com.queueWithArray;
+package com.queuewithdynamicarray;
 
 public class Executer {
 

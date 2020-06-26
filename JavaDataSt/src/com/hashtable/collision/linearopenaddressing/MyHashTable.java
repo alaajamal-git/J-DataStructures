@@ -10,7 +10,6 @@ public class MyHashTable<K,V> implements HashFunction<K, V>{
 		this.c=capacity;
 		this.hashProvider=hashProvider;
 		table=new Pair[c];
-		
 	}
 	
 	
@@ -19,11 +18,11 @@ public class MyHashTable<K,V> implements HashFunction<K, V>{
 		if(c==size) return false;// table is full
 		pair=new Pair<K,V>(k, v);
 		int index=hashProvider.hashVaue(k, c);
-		if(table[index]==null)
+		if(table[index]==null||table[index].isEmptyObj())
 				table[index]=pair;
 		else 
-			while(table[(index++)%c]!=null); //find next free position
-				table[index%c]=pair;
+			while(table[index%=c]!=null&&!table[(index++)%c].isEmptyObj()); //find next free position
+				table[index]=pair;
 		
 		size++;
 				return true;
@@ -38,7 +37,7 @@ public class MyHashTable<K,V> implements HashFunction<K, V>{
 		Pair<K,V>pair =(Pair<K, V>) table[index];
 		if(pair!=null&&pair.keyEquals(k))return pair.getV();
 		index++;
-		for(;!pair.keyEquals(k)&&pair!=null;index++) {   //null position means not found!
+		for(;pair!=null&&!pair.keyEquals(k);index++) {   //null position means not found!
 			if((index%=c)==stopIdx) return null;      //all elements are reached
 			pair =(Pair<K, V>) table[index];
 		}
@@ -49,19 +48,27 @@ public class MyHashTable<K,V> implements HashFunction<K, V>{
 	@Override
 	public int remove(K k) {
 
+		int index=hashProvider.hashVaue(k, c);
+		int stopIdx=index;
+		Pair<K,V>pair =(Pair<K, V>) table[index];
+		if(pair!=null&&pair.keyEquals(k))
+			{pair.remove();
+			size--;
+			return 1;
+			}
+		index++;
+		for(;!pair.keyEquals(k)&&pair!=null;index++) {  
+			pair =(Pair<K, V>) table[index];
+			if((index%=c)==stopIdx || pair==null) return 0;      //all elements are reached or not found
+		}
+		pair.remove();
+		size--;
+		return 1;
+		}
 
-		return 0;
+
+
+	public int getSize() {
+		return size;
 	}
-
-
-	public void checkCollisionFactor() {
-
-		
-
-		
-	}
-	
-
-	
-
 }

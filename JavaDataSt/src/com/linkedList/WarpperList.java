@@ -57,5 +57,36 @@ public class WarpperList <T>{
 		aplicable.doAction(temp);
 
 	}
+	
+	public boolean remove(T t) {
+		h_node.getData();
+		if(h_node.getData().equals(t)) {
+			h_node=h_node.getNext_node();
+			size--;
+			return true;
+		}
+			Node<T> temp=h_node;
+			Node<T> next=temp.getNext_node();
+		while(temp!=null&&next!=null) {
+			if(next.getData().equals(t)) {
+				if(next.getNext_node()!=null) {
+					temp.setNext_node(next.getNext_node());
+					size--;
+					return true;}
+				else {
+					temp.setNext_node(null);
+					size--;
+					return true;
+				}
+			}
+			
+					temp=temp.getNext_node();
+					next=temp.getNext_node();
+		}
+		return false;
+
+		
+		
+	}
 
 }

@@ -14,8 +14,12 @@ public class Executer {
 		table.put(879, "walaa");
 		table.put(845, "alaa");
 		System.out.println(table.put(474, "walaa"));
+		System.out.println(table.getSize());
 		System.out.println(table.put(454, "walaa"));// full
 		System.out.println(table.get(474));
+		System.out.println(table.remove(474));
+		System.out.println(table.get(474));
+		System.out.println(table.getSize());
 
 	}
 

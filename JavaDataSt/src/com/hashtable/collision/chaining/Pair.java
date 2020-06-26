@@ -22,6 +22,12 @@ public class Pair <K,V>{
 		this.v = v;
 	}
 	
-	
+	public boolean equals(Object o) {
+		K key=(K) o;
+		if(key.equals(this.getK())) return true;
+		
+		return false;
+		
+	}
 
 }
