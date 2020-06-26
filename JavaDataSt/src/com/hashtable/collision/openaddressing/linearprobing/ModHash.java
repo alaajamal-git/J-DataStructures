@@ -1,4 +1,4 @@
-package com.hashtable.collision.linearopenaddressing;
+package com.hashtable.collision.openaddressing.linearprobing;
 
 public class ModHash implements HashProvider<Integer>{
 

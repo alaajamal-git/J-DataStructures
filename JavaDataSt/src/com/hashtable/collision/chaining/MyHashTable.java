@@ -5,10 +5,10 @@ import com.linkedList.WarpperList;
 
 public class MyHashTable<K,V> implements HashFunction<K, V>{
     private final HashProvider<K> hashProvider;
-	Pair<K, V> pair;
-	WarpperList<Pair<K,V>> [] table;
-	int size=0;
-	int capacity;
+    private Pair<K, V> pair;
+    private WarpperList<Pair<K,V>> [] table;
+    private int size=0;
+    private int capacity;
 	public int getSize() {
 		return size;
 	}

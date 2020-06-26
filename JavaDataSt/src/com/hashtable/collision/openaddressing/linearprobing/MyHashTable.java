@@ -1,11 +1,11 @@
-package com.hashtable.collision.linearopenaddressing;
+package com.hashtable.collision.openaddressing.linearprobing;
 
 public class MyHashTable<K,V> implements HashFunction<K, V>{
     private final HashProvider<K> hashProvider;
-	Pair<K, V> pair;
-	Pair<K,V>[] table;
-	int c;
-	int size=0;
+    private Pair<K, V> pair;
+    private Pair<K,V>[] table;
+    private int c;
+    private int size=0;
 	public MyHashTable(int capacity,HashProvider<K> hashProvider) {
 		this.c=capacity;
 		this.hashProvider=hashProvider;
@@ -50,13 +50,12 @@ public class MyHashTable<K,V> implements HashFunction<K, V>{
 
 		int index=hashProvider.hashVaue(k, c);
 		int stopIdx=index;
-		Pair<K,V>pair =(Pair<K, V>) table[index];
+		Pair<K,V>pair =(Pair<K, V>) table[index++];
 		if(pair!=null&&pair.keyEquals(k))
 			{pair.remove();
 			size--;
 			return 1;
 			}
-		index++;
 		for(;!pair.keyEquals(k)&&pair!=null;index++) {  
 			pair =(Pair<K, V>) table[index];
 			if((index%=c)==stopIdx || pair==null) return 0;      //all elements are reached or not found

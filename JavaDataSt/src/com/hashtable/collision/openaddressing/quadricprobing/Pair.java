@@ -1,4 +1,4 @@
-package com.hashtable.collision.linearopenaddressing;
+package com.hashtable.collision.openaddressing.quadricprobing;
 
 public class Pair <K,V>{
 	

@@ -1,6 +1,4 @@
-package com.hashtable.collision.chaining;
-
-import com.hashtable.collision.chaining.HashProvider;
+package com.hashtable.collision.openaddressing.quadricprobing;
 
 public class ModHash implements HashProvider<Integer>{
 
