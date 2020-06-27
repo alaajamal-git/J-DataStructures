@@ -40,10 +40,12 @@ public class Pair <K,V>{
 	public boolean isEmptyObj() {
 		
 		return this.DELETE_FLAG;
-				
-		
 		
 	}
 	
+	public String toString() {
+		
+		return this.v.toString();
+	}
 
 }

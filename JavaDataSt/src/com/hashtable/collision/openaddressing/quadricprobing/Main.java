@@ -6,20 +6,25 @@ public class Main {
 	public static void main(String[] args) {
 
 
-		MyHashTable<Integer, String> table=new MyHashTable<>(6,new ModHash());
+		MyHashTable<Integer, String> table=new MyHashTable<>(27,new ModHash());
 		
-		table.put(1700, "alaa");
-		table.put(1211, "walaa");
-		table.put(545, "alaa");
-		table.put(879, "walaa");
-		table.put(845, "alaa");
-		System.out.println(table.put(474, "walaa"));
-		System.out.println(table.getSize());
-		System.out.println(table.put(454, "walaa"));// full
-		System.out.println(table.get(474));
-		System.out.println(table.remove(474));
-		System.out.println(table.get(474));
-		System.out.println(table.getSize());
+		table.put(1700, "alaa");// %27 =26
+		table.put(1214, "walaa");// %27 =26
+		table.put(26, "sad");// %27 =26
+		table.put(134, "dffd");// %27 =26
+		table.put(161, "arg");// %27 =26
+		table.put(188, "gtht");// %27 =26
+		table.put(215, "fhh");// %27 =26
+		table.put(242, "ffff");// %27 =26
+		table.put(269, "rrrr");// %27 =26
+		table.put(296, "qqqq");// %27 =26
+		table.put(1214, "ssss");// %27 =26
+
+		System.out.println(table);
+		System.out.println(table.get(1214));
+
+		
+		
 
 	}
 

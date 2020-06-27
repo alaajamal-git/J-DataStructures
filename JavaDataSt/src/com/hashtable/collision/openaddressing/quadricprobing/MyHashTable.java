@@ -1,11 +1,11 @@
 package com.hashtable.collision.openaddressing.quadricprobing;
 
-//h + (ai + bi2)
+//h + (a*i + b*i^2) 
 
 public class MyHashTable<K,V> implements HashFunction<K, V>{
     private final HashProvider<K> hashProvider;
-    private final int a=0;
-    private final int b=0;
+    private final int a=4;
+    private final int b=12;
     private Pair<K, V> pair;
     private Pair<K,V>[] table;
     private int c;
@@ -24,65 +24,78 @@ public class MyHashTable<K,V> implements HashFunction<K, V>{
 		if(c==size) return false;// table is full
 		pair=new Pair<K,V>(k, v);
 		int h=hashProvider.hashVaue(k, c);
-		int i=0;
-		if(table[h]==null||table[h].isEmptyObj())
-				table[h]=pair;
-		else 
-			while(table[h%=c]!=null&&!table[(h++)%c].isEmptyObj()); //find next free position
-		
-				table[h]=pair;
-		
-		size++;
+		int index;
+			for(int j=0;j<c;j++) {
+				index=quadricJump(h, j);
+				if(table[index]==null||table[index].isEmptyObj()) {
+					table[index]=pair;
+					size++;
+					break;
+				}
+				else if(table[index]!=null)				//if key already exists update its value.
+					if(table[index].keyEquals(k))
+						table[index].setV(v);
+			}	
 				return true;
-						
-
 	}
 
 	@Override
 	public V get(K k) {
 		int h=hashProvider.hashVaue(k, c);
-		int stopIdx=h;
-		Pair<K,V>pair =(Pair<K, V>) table[h];
-		if(pair!=null&&pair.keyEquals(k))return pair.getV();
-		h++;
-		for(;pair!=null&&!pair.keyEquals(k);h++) {   //null position means not found!
-			if((h%=c)==stopIdx) return null;      //all elements are reached
-			pair =(Pair<K, V>) table[h];
+		int index;
+		for(int j=0;j<c;j++) {
+			index=quadricJump(h, j);
+			if(table[index]==null)
+				break;
+			else {
+				if(table[index].getK().equals(k))
+					return table[index].getV();
+			}
 		}
-		return (pair==null)?null:pair.getV();
-			
+		return null;
 		}
 
 	@Override
 	public int remove(K k) {
-
-		int h=hashProvider.hashVaue(k, c);
-		int stopIdx=h;
-		Pair<K,V>pair =(Pair<K, V>) table[h++];
-		if(pair!=null&&pair.keyEquals(k))
-			{pair.remove();
-			size--;
-			return 1;
-			}
 		
-		for(;!pair.keyEquals(k)&&pair!=null;h++) {  
-			pair =(Pair<K, V>) table[h];
-			if((h%=c)==stopIdx || pair==null) return 0;      //all elements are reached or not found
+	int h=hashProvider.hashVaue(k, c);
+	int index;
+	for(int j=0;j<c;j++) {
+		index=quadricJump(h, j);
+		if(table[index]==null)
+			break;
+		else {
+			if(table[index].getK().equals(k)) {
+				 table[index].remove();
+				 size--;
+				 return 1;
+			}
 		}
-		pair.remove();
-		size--;
-		return 1;
-		}
+	}
+	return 0;
+	}
 	
 	public int quadricJump(int h,int i) {
-		h=(int) (h+a*i+b*Math.pow(i, 2));
-		
-		return h;
+		int powi=(int) Math.pow(i, 2);
+		return (h+(a*i)+(b*powi))%c;
 	}
 
 
 
 	public int getSize() {
 		return size;
+	}
+	
+	public String toString() {
+		String result="[";
+		for(Pair<K, V> pair:table) {
+			if(pair!=null&&!pair.isEmptyObj())
+			result+=pair.toString()+", ";
+			else
+				result+="0, ";
+		}
+		result+="]";
+		return result;
+		
 	}
 }
