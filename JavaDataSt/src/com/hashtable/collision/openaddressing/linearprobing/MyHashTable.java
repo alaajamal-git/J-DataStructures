@@ -61,8 +61,8 @@ public class MyHashTable<K, V> implements HashFunction<K, V> {
 			size--;
 			return 1;
 		}
-		for (; !pair.keyEquals(k) && pair != null; index++) {
-			pair = (Pair<K, V>) table[index];
+		for (; pair != null && !pair.keyEquals(k); index++) {
+			pair = (Pair<K, V>) table[index%c];
 			if ((index %= c) == stopIdx || pair == null)
 				return 0; // all elements are reached or not found
 		}
